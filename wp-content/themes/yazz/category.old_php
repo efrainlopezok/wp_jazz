@@ -1,0 +1,40 @@
+<?php
+/**
+* Description: Used as a page template to show page contents, followed by a loop 
+* through the "Single Blog"
+*/
+
+// Add our custom loop
+
+remove_action ('genesis_loop', 'genesis_do_loop'); // Remove the standard loop
+add_action( 'genesis_loop', 'test_do_loop' ); // Add custom loop
+function test_do_loop() {
+    while ( have_posts() ) : the_post();
+		?>
+		<article class="entry">
+			<header class="entry-header">
+				<p class="entry-meta">
+					<time class="entry-time"><?php the_time('l, F jS, Y') ?></time>
+					<span class="entry-author"></span>
+					<span class="entry-comments-link"></span>
+				</p>
+			</header>
+			<div class="entry-content">
+				<?php echo the_content(); ?>
+			</div>
+			<footer class="entry-footer">
+				<p class="entry-meta">
+					<span class="entry-categories"></span>
+				</p>
+			</footer>
+		</article>
+    	<?php
+    endwhile;
+
+}
+    
+/** Remove Post Info */
+remove_action('genesis_before_post_content','genesis_post_info');
+remove_action('genesis_after_post_content','genesis_post_meta');
+ 
+genesis();
